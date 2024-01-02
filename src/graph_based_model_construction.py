@@ -223,14 +223,14 @@ class GraphBasedModelConstructor:
                 logger.debug("Novel model %s has a similar isoform %s" % (model.transcript_id, to_substitute[model.transcript_id]))
                 self.transcript_read_ids[to_substitute[model.transcript_id]] += self.transcript_read_ids[model.transcript_id]
                 # del self.transcript_read_ids[model.transcript_id]
-                # continue
+                continue
 
             if self.internal_counter[model.transcript_id] < novel_isoform_cutoff:
                 logger.debug("Novel model %s has coverage %d < %.2f, component cov = %d" % (model.transcript_id,
                                                                        self.internal_counter[model.transcript_id],
                                                                        novel_isoform_cutoff, component_coverage))
                 # del self.transcript_read_ids[model.transcript_id]
-                # continue
+                continue
 
             if len(model.exon_blocks) <= 2:
                 mapq = self.mapping_quality(model)
@@ -238,7 +238,7 @@ class GraphBasedModelConstructor:
                 if mapq < self.params.simple_models_mapq_cutoff:
                     logger.debug("Novel model %s has poor quality" % model.transcript_id)
                     # del self.transcript_read_ids[model.transcript_id]
-                    # continue
+                    continue
 
             # TODO: correct ends for known
             self.correct_novel_transcrip_ends(model, self.transcript_read_ids[model.transcript_id])
